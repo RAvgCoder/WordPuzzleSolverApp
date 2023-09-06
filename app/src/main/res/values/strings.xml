@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Word Puzzzle Solver</string>
+    <string name="txt_field_placeHolder">Input Text to unscramble</string>
+    <string name="txt_field_label">Text</string>
+    <string name="permutation_error_message_len">Cannot permute \"%s\". Its length is greater than 8</string>
+    <string name="button_txt">Permute</string>
+    <string name="permutation_error_message_symbols">Cannot permute %s. It has to only contain letters [a-z,A-Z]</string>
+    <string name="drop_down_txt">%d Letter %s</string>
+</resources>
