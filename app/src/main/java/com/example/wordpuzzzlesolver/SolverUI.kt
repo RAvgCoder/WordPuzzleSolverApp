@@ -20,7 +20,7 @@ fun SolverUI(
     modifier: Modifier = Modifier
 ) {
     var scrambledTxt by rememberSaveable { mutableStateOf("") }
-    var permutedWords by rememberSaveable {mutableStateOf(ArrayList<String>())}
+    var permutedWords by rememberSaveable { mutableStateOf(ArrayList<String>()) }
     Column {
         InputButtonField(text = scrambledTxt, modifier = modifier, onButtonClick = {
             permutedWords = Permutation.combination(scrambledTxt)
@@ -30,7 +30,8 @@ fun SolverUI(
         })
 
         ResultColumn(
-            permutedWords = permutedWords, modifier = Modifier.fillMaxSize()
+            permutedWords = permutedWords,
+            modifier = Modifier.fillMaxSize()
         )
     }
 }

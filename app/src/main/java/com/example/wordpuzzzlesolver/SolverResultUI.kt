@@ -38,7 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.wordpuzzzlesolver.model.CompactTrieTree
+import com.example.wordpuzzzlesolver.model.CompressedTrieTree
 import com.example.wordpuzzzlesolver.model.Dictionary
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -48,7 +48,7 @@ fun ResultColumn(permutedWords: ArrayList<String>, modifier: Modifier = Modifier
     val dictionary by remember {
         mutableStateOf(
             Dictionary.initialize(
-                resources, CompactTrieTree()
+                resources, CompressedTrieTree()
             )
         )
     }

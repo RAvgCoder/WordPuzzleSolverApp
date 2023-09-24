@@ -1,8 +1,8 @@
 package com.example.wordpuzzzlesolver.model
 
-class CompactTrieTree : DictionaryStorage {
+class CompressedTrieTree : DictionaryStorage {
     private var _word: String = "$"
-    private var _nextNode: MutableMap<String, CompactTrieTree> = mutableMapOf()
+    private var _nextNode: MutableMap<String, CompressedTrieTree> = mutableMapOf()
     private var _isValidWord: Boolean = false
 
     override fun insertIntoTree(word: String, onlyAlphabets: Boolean) {
@@ -16,7 +16,7 @@ class CompactTrieTree : DictionaryStorage {
         return isValidWordHelper(word,this)
     }
 
-    private fun isValidWordHelper(word: String, currNode: CompactTrieTree): Boolean {
+    private fun isValidWordHelper(word: String, currNode: CompressedTrieTree): Boolean {
         val(foundWord, suffixIndex, nextNode) = currNode.getStartingStringInfo(word)
         // Word is not found || not all char of the found word starts the given word
         if (foundWord == null || suffixIndex != foundWord.lastIndex) return false
@@ -28,7 +28,7 @@ class CompactTrieTree : DictionaryStorage {
         printAllWordsHelper(this._nextNode, StringBuilder())
     }
 
-    private fun insertIntoTreeHelper(word: String, currNode: CompactTrieTree) {
+    private fun insertIntoTreeHelper(word: String, currNode: CompressedTrieTree) {
         val (foundWord, suffixIndex, nextNode) = currNode.getStartingStringInfo(word)
         if (foundWord == null) { // New word not matched to any already contained  map -> {man,dog} new -> boy
             nextNode.addWholeWord(word)
@@ -46,7 +46,7 @@ class CompactTrieTree : DictionaryStorage {
 
     var count = 1
     private fun printAllWordsHelper(
-        children: MutableMap<String, CompactTrieTree>,
+        children: MutableMap<String, CompressedTrieTree>,
         wordBuilder: StringBuilder
     ) {
         var currWord: String?;
@@ -70,7 +70,7 @@ class CompactTrieTree : DictionaryStorage {
      *
      * Triple(foundWord, suffixIndex, parentNodeToBe)
      */
-    private fun getStartingStringInfo(word: String): Triple<String?, Int, CompactTrieTree> {
+    private fun getStartingStringInfo(word: String): Triple<String?, Int, CompressedTrieTree> {
         for (str in _nextNode.keys) {
             if (word[0] == str[0]) {
                 val pointer = str.startingStringIndex(word)
@@ -85,7 +85,7 @@ class CompactTrieTree : DictionaryStorage {
 
     private fun addWholeWord(word: String) {
         if (word.isEmpty()) return
-        _nextNode[word] = CompactTrieTree().apply {
+        _nextNode[word] = CompressedTrieTree().apply {
             this._word = word
             _isValidWord = true
         }
@@ -125,14 +125,14 @@ class CompactTrieTree : DictionaryStorage {
         val wordRHS = subString(this._word,suffixIndex)
 
         // Create the RHS node
-        val nodeWordRHS = CompactTrieTree().also { nodeWordRHS ->
+        val nodeWordRHS = CompressedTrieTree().also { nodeWordRHS ->
             nodeWordRHS._word = wordRHS
             nodeWordRHS._nextNode = this._nextNode
             nodeWordRHS._isValidWord = this._isValidWord
         }
 
         // Fixing the currNode-LHS members
-        this._nextNode = HashMap<String, CompactTrieTree>().apply {
+        this._nextNode = HashMap<String, CompressedTrieTree>().apply {
             this[wordRHS] = nodeWordRHS
         }
         this._word = wordLHS
@@ -140,7 +140,7 @@ class CompactTrieTree : DictionaryStorage {
 
         // Adding newPartWord under the LHS node
         if (newPartWord.isNotEmpty()) { // If your word isn't exactly smaller than th curr word : curr -> menu, new -> mens
-            this._nextNode[newPartWord] = CompactTrieTree().also {
+            this._nextNode[newPartWord] = CompressedTrieTree().also {
                 it._word = newPartWord
                 it._isValidWord = true
             }

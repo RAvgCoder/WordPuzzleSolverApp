@@ -2,11 +2,10 @@ package com.example.wordpuzzzlesolver.model
 
 import android.content.res.Resources
 import com.example.wordpuzzzlesolver.R
-import org.jetbrains.annotations.TestOnly
 import java.io.File
 
 fun main() {
-    val dictionary = Dictionary.initialize(CompactTrieTree())
+    val dictionary = Dictionary.initialize(CompressedTrieTree())
     println(dictionary.isValidWord("cadb"))
 }
 
